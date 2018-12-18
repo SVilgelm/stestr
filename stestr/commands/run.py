@@ -308,6 +308,11 @@ def run_command(config='.stestr.conf', repo_type='file',
             exit(1)
         repo = util.get_repo_initialise(repo_type, repo_url)
     combine_id = None
+    if concurrency and concurrency < 0:
+        msg = ("The provided concurrency value: %s is not valid. An integer "
+               ">= 0 must be used.\n")
+        stdout.write(msg)
+        return 2
     if combine:
         latest_id = repo.latest_id()
         combine_id = six.text_type(latest_id)
